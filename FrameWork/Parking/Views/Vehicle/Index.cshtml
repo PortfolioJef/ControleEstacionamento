@@ -1,49 +1,46 @@
-﻿@model IEnumerable<StaparParking.Models.Valet>
+﻿@model IEnumerable<StaparParking.Models.Vehicle>
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>Index</h2>
 
-<div class="form-group btn btn-success hidden">
-    @Html.Raw(ViewBag.Message)
-</div>
-<div class="form-group">
-    @Html.ActionLink(" ", "Create", "Valet", new { @class = "glyphicon glyphicon-plus btn btn-success" })
-</div>
-
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Brand)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NumberId)
+            @Html.DisplayNameFor(model => model.Model)
         </th>
-        <th class="col-md-1">
-            @Html.DisplayName("Nascimento")
+        <th>
+            @Html.DisplayNameFor(model => model.Identification)
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr id="row_@item.Id">
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Brand)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NumberId)
+                @Html.DisplayFor(modelItem => item.Model)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
+                @Html.DisplayFor(modelItem => item.Identification)
             </td>
             <td colspan="2">
                 @Html.ActionLink(" ", "Edit", new { id = item.Id },
                   htmlAttributes: new { @class = "glyphicon glyphicon-pencil btn btn-info" })
 
-                <a href="#" class="btn btn-danger" onclick="ConfirmDelete('@item.Id','@item.Name.Trim()')">
+                <a href="#" class="btn btn-danger" onclick="ConfirmDeleteParking('@item.Id', '@item.Identification.Trim()')">
                     <i class="glyphicon glyphicon-trash"></i>
                 </a>
             </td>
@@ -51,6 +48,8 @@
     }
 
 </table>
+
+
 
 <!-- Logout Modal-->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="ModalDelete" aria-hidden="true">

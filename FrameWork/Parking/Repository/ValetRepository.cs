@@ -7,7 +7,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 
-
 namespace StaparParking.Repository
 {
     public class ValetRepository
@@ -21,18 +20,18 @@ namespace StaparParking.Repository
 
         public void AddValet(Models.Valet objValet)
         {
-            //try
-            //{
-
-            connection();
-            DbCon.Open();
-            DbCon.Execute("Valet_AddNew", new { Name = objValet.Name, NumberId = objValet.NumberId, BirthDate = objValet.BirthDate }, commandType: CommandType.StoredProcedure);
-            DbCon.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw ex;
-            //}
+            try
+            {
+                connection();
+                DbCon.Open();
+                DbCon.Execute("Valet_AddNew", new { Name = objValet.Name, NumberId = objValet.NumberId, BirthDate = objValet.BirthDate },
+                    commandType: CommandType.StoredProcedure);
+                DbCon.Close();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public Models.Valet GetValetById(int Id)
@@ -40,17 +39,17 @@ namespace StaparParking.Repository
             try
             {
                 DynamicParameters param = new DynamicParameters();
-                param.Add("@CarId", Id);
+                param.Add("@ValetId", Id);
                 connection();
                 DbCon.Open();
                 Valet Valet = SqlMapper.Query<Valet>(
-                                  DbCon, "Valet_GetById", param).FirstOrDefault();
+                                  DbCon, "Valet_GetById "+Id.ToString(), new { ValetId = Id }).FirstOrDefault();
                 DbCon.Close();
                 return Valet;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 
@@ -71,13 +70,14 @@ namespace StaparParking.Repository
             }
         }
 
-        public void UpdateValet(Models.Valet objUpdate)
+        public void UpdateValet(Models.Valet objValet)
         {
             try
             {
                 connection();
                 DbCon.Open();
-                DbCon.Execute("Valet_UpdateDetails", objUpdate, commandType: CommandType.StoredProcedure);
+                DbCon.Execute("Valet_UpdateDetails", new { id = objValet.Id, Name = objValet.Name, NumberId = objValet.NumberId, BirthDate = objValet.BirthDate },
+                    commandType: CommandType.StoredProcedure);
                 DbCon.Close();
             }
             catch (Exception)

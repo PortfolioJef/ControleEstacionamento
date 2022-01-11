@@ -16,26 +16,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Início", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Estacionar", "Index", "CarModel", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Estacionar", "Index", "Parking", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Manobristas", "Index", "Valet", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-
-
-
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    
-                </ul>
+                @Html.ActionLink("Veículos", "Index", "Vehicle", new { area = "" }, new { @class = "navbar-brand" })
             </div>
         </div>
     </div>
     <div class="container body-content">
-               @RenderBody()
+        <h2>Estacionamento</h2>
+        <hr />
+        @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Estapar</p>
+            <p>&copy; @DateTime.Now.Year - Estapar LTDA</p>
         </footer>
     </div>
 

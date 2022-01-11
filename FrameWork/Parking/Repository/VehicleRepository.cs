@@ -17,14 +17,13 @@ namespace StaparParking.Repository
             string constr = ConfigurationManager.ConnectionStrings["ValetDBConn"].ToString();
             DbCon = new SqlConnection(constr);
         }
-
         public void AddVehicle(Vehicle objVehicle)
         {
             try
             {
                 connection();
                 DbCon.Open();
-                DbCon.Execute("Vehicle_AddNew", objVehicle, commandType: CommandType.StoredProcedure);
+                DbCon.Execute("Vehicle_AddNew", new { objVehicle.Model, objVehicle.Brand, objVehicle.Identification }, commandType: CommandType.StoredProcedure);
                 DbCon.Close();
             }
             catch (Exception ex)
@@ -42,7 +41,7 @@ namespace StaparParking.Repository
                 connection();
                 DbCon.Open();
                 Vehicle Vehicle = SqlMapper.Query<Vehicle>(
-                                  DbCon, "Vehicles_Get", param).FirstOrDefault();
+                                  DbCon, "Vehicles_Get",  new { VehicleId = Id }).FirstOrDefault();
                 DbCon.Close();
                 return Vehicle;
             }
@@ -69,13 +68,13 @@ namespace StaparParking.Repository
             }
         }
 
-        public void UpdateVehicle(Vehicle objUpdate)
+        public void UpdateVehicle(Vehicle objVehicle)
         {
             try
             {
                 connection();
                 DbCon.Open();
-                DbCon.Execute("Vehicle_UpdateDetails", objUpdate, commandType: CommandType.StoredProcedure);
+                DbCon.Execute("Vehicle_UpdateDetails", new { VehicleId = objVehicle.Id, Model = objVehicle.Model, Brand = objVehicle.Brand, Identification = objVehicle.Identification }, commandType: CommandType.StoredProcedure);
                 DbCon.Close();
             }
             catch (Exception)
